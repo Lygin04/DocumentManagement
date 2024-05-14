@@ -85,7 +85,7 @@ public class DocumentServiceImpl implements DocumentService {
             document.setFullName(fileName);
             document.setPath("/resources/documents/" + fileName);
             document.setCreateDate(new Date());
-            String type = file.getContentType().substring(12);
+            String type = file.getContentType().substring(file.getContentType().lastIndexOf("/") + 1);
             if (Objects.equals(type, "msword"))
                 document.setType(DocType.doc);
             else if(Objects.equals(type, "csv"))

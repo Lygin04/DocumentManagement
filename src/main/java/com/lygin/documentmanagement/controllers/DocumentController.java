@@ -64,7 +64,7 @@ public class DocumentController {
 
     @GetMapping("/delete/{id}")
     public String Delete(@PathVariable Long id){
-        boolean a = _documentService.Delete(id);
-        return "redirect:/api/v1/doc/getAll";
+        _documentService.Delete(id);
+        return "redirect:/document/getAll";
     }
 }

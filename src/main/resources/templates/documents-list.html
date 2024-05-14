@@ -17,6 +17,17 @@
             </div>
         </div>
     </form>
+
+    <form method="get" action="/document/getAll">
+        <div class="row mb-3">
+            <div class="row">
+                <div class="offset-sm-4 col-sm-4 d-grid">
+                    <button type="submit" class="btn btn-primary">Сбросить фильтр</button>
+                </div>
+            </div>
+        </div>
+    </form>
+
     <h2 class="text-center my-4">Поиск по имени</h2>
     <form method="get" enctype="multipart/form-data" action="/document/filter/name" th:object="${name}">
         <div class="row mb-3">
@@ -36,7 +47,7 @@
     <h2 class="text-center my-4">Поиск по типу</h2>
     <form method="get" enctype="multipart/form-data" action="/document/filter/type" th:object="${type}">
         <div class="row mb-3">
-            <label class="col-sm-4 col-form-label">Имя</label>
+            <label class="col-sm-4 col-form-label">Тип</label>
             <div class="col-sm-8">
                 <select class="form-control" name="type">
                     <option th:each="type : ${documentType}" th:text="${type.name()}"></option>
