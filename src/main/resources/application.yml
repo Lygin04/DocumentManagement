@@ -1,0 +1,28 @@
+spring:
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+      file-size-threshold: 100MB
+  datasource:
+    hikari:
+      auto-commit: false
+    url: jdbc:postgresql://localhost:5432/DocumentManagement
+    username: postgres
+    password: Kostylygin2004
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  web:
+    resources:
+      static-locations: classpath:/resources/documents/
+
+server:
+  port: 8090
