@@ -29,14 +29,6 @@ public class DocumentController {
         return "documents-list";
     }
 
-    @GetMapping("/filter")
-    public ResponseEntity<List<Document>> Filter(@RequestParam String name,
-                                                 @RequestParam Date createDate,
-                                                 @RequestParam DocType type){
-        List<Document> documents = _documentService.Filter(name, createDate, type);
-        return ResponseEntity.ok(documents);
-    }
-
     @GetMapping("/filter/name")
     public String Filter(@RequestParam String name,
                                                  Model model){

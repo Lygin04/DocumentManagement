@@ -12,7 +12,6 @@ import java.util.List;
 public interface DocumentService {
 
     List<Document> GetAll();
-    List<Document> Filter(String name, Date createDate, DocType type);
     List<Document> Filter(String name);
     List<Document> Filter(DocType type);
     boolean Delete(Long id);

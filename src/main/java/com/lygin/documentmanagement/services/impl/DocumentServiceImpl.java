@@ -30,24 +30,22 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     @Override
-    public List<Document> Filter(String name, Date createDate, DocType type) {
-        List<Document> documents = _documentRepository.findByNameAndCreateDateAndType(name, createDate, type);
-        return documents;
-    }
-
-    @Override
     public List<Document> Filter(String name) {
         List<Document> documents = new LinkedList<>();
-        if(name != null && !name.isEmpty())
-            documents = _documentRepository.findAllByName(name);
-        else
-            documents = GetAll();
+        for (Document document : _documentRepository.findAll()) {
+            if (document.getName().equalsIgnoreCase(name))
+                documents.add(document);
+        }
         return documents;
     }
 
     @Override
     public List<Document> Filter(DocType type) {
-        List<Document> documents = _documentRepository.findAllByType(type);
+        List<Document> documents = new LinkedList<>();
+        for (Document document : _documentRepository.findAll()) {
+            if (document.getType().name().equalsIgnoreCase(type.name()))
+                documents.add(document);
+        }
         return documents;
     }
 
@@ -69,16 +67,16 @@ public class DocumentServiceImpl implements DocumentService {
 
         Document document = new Document();
         if (file != null) {
-            if(_documentRepository.findByName(file.getOriginalFilename()).isPresent())
+            if (_documentRepository.findByName(file.getOriginalFilename()).isPresent())
                 return ResponseEntity.badRequest().body(null);
             Path fileStorageLocation = Paths.get("src/main/resources/documents").toAbsolutePath().normalize();
-                Files.createDirectories(fileStorageLocation);
+            Files.createDirectories(fileStorageLocation);
 
             String fileName = UUID.randomUUID().toString() + "." + file.getOriginalFilename();
 
 
-                Path targetLocation = fileStorageLocation.resolve(fileName);
-                Files.copy(file.getInputStream(), targetLocation);
+            Path targetLocation = fileStorageLocation.resolve(fileName);
+            Files.copy(file.getInputStream(), targetLocation);
 
 
             document.setName(file.getOriginalFilename().substring(0, file.getOriginalFilename().lastIndexOf(".")));
@@ -88,7 +86,7 @@ public class DocumentServiceImpl implements DocumentService {
             String type = file.getContentType().substring(file.getContentType().lastIndexOf("/") + 1);
             if (Objects.equals(type, "msword"))
                 document.setType(DocType.doc);
-            else if(Objects.equals(type, "csv"))
+            else if (Objects.equals(type, "csv"))
                 document.setType(DocType.csv);
             else if (Objects.equals(type, "txt"))
                 document.setType(DocType.txt);
